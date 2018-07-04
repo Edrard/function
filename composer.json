@@ -1,0 +1,19 @@
+{
+    "name": "Edrard/function",
+    "description": "Linux folder backup",
+    "type": "library",
+    "license": "MIT",
+    "authors": [{
+        "name": "Edrard",
+        "email": "demonand@gmail.com"
+    }],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "files": [
+            "function.php"
+        ]
+    }
+}
