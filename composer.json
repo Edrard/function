@@ -1,6 +1,6 @@
 {
     "name": "edrard/function",
-    "description": "Linux folder backup",
+    "description": "Some my functions",
     "type": "library",
     "license": "MIT",
     "authors": [{
@@ -12,7 +12,12 @@
     },
     "autoload": {
         "files": [
-            "function.php"
+            "Array.php",
+            "Date.php",
+            "Error.php",
+            "String.php",
+            "Url.php",
+            "Shell.php"
         ]
     }
 }
