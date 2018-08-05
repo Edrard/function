@@ -1,24 +1,43 @@
 <?php
-function special_cleans($string){
-    
+/**
+* Changing special double quotes to normal
+* 
+* @param mixed $string
+*/
+function string_quotes_change($string){
+
     $search[] = '“';
     $search[] = '”';
 
     $replace[] = '"';
     $replace[] = '"';
-    
+
     return is_string($string) ? str_replace($search,$replace,$string) : $string;
 }
-function preg_non_word(){
-    return '0-9A-Za-zА-Яа-яЁё';
-}
-function have_russian($input_line){
+/**
+* Check if string have Cyrillic
+* 
+* @param mixed $input_line
+*/
+function string_have_russian($input_line){
     return preg_match("/\p{Cyrillic}/u", $input_line);    
 }
-function only_latin($input_line){
+/**
+* Check if string have only latin
+* 
+* @param mixed $input_line
+*/
+function string_only_latin($input_line){
     return preg_match("/^[\w\d\s\p{P}]*$/", $input_line);
 }
-function encodestring($st,$tran = 'en',$base = 'ru'){ 
+/**
+* Transliterate text
+* 
+* @param mixed $st
+* @param mixed $tran
+* @param mixed $base
+*/
+function string_encodestring($st,$tran = 'en',$base = 'ru'){ 
     $arr['ru'] = array( 
         'А' => 'A', 
         'Б' => 'B', 
@@ -99,6 +118,12 @@ function encodestring($st,$tran = 'en',$base = 'ru'){
 
     return nl2br(htmlspecialchars($transl)); 
 }
+/**
+* Mb to upper case first latter
+* 
+* @param mixed $string
+* @param mixed $encoding
+*/
 function mb_ucfirst($string, $encoding = 'utf-8')
 {
     $strlen = mb_strlen($string, $encoding);
@@ -120,10 +145,41 @@ function string_rspec($str, $white = TRUE, $add = FALSE, $replace = ''){
     $main = $add !== FALSE ? $main.preg_quote($add) : $main;
     return preg_replace("/[^".$main."]/iu", $replace, htmlspecialchars_decode($str));
 }
-function slug_string($str){
-    return mb_strtolower(preg_replace('#[^A-Za-z0-9\-]#iu','',str_replace(' ','-',encodestring(trim($str)))));
+function preg_non_word(){
+    return '0-9A-Za-zА-Яа-яЁё';
 }
-function truncate($text, $length = 100, $ending = '...', $exact = true, $considerHtml = false, $insert = false) {
+/**
+* Clean filename
+* 
+* @param mixed $name
+*/
+function string_file_name($name){
+    $name = preg_replace('/\s+/', '-', $name);
+    $name = preg_replace("/[^0-9A-Za-zА-Яа-яЁё\-_]/iu", '', $name);
+    $name = trim($name, ".-_\t\n\r\0\x0B");
+    return $name;
+}
+/**
+* Slug text
+* 
+* @param string $str - String
+* @param string $del - Delimiter
+*/
+function string_slug($str,$del = '-'){
+    $preg = '\\'.$del;
+    return mb_strtolower(preg_replace('#[^A-Za-z0-9'.$preg.']#iu','',str_replace(' ',$del,encodestring(trim($str)))));
+}
+/**
+* Truncate string
+* 
+* @param mixed $text
+* @param mixed $length
+* @param mixed $ending
+* @param mixed $exact
+* @param mixed $considerHtml
+* @param mixed $insert
+*/
+function string_truncate($text, $length = 100, $ending = '...', $exact = true, $considerHtml = false, $insert = false) {
     if (is_array($ending)) {
         extract($ending);
     }
@@ -212,33 +268,11 @@ function truncate($text, $length = 100, $ending = '...', $exact = true, $conside
 
     return $truncate;
 }
-function escape_like($string)
-{
-    $search = array('%', '_');
-    $replace   = array('\%', '\_');
-    return str_replace($search, $replace, $string);
-}
-function reconstruct_array($array,$t="|"){
-    $new = [];
-    foreach($array as $key => $val){
-        $tmp = explode($t,$key);
-        $new[$tmp[0]] = !isset($new[$tmp[0]]) ? [] : $new[$tmp[0]];
-        $new[$tmp[0]] = _reconstruct_array($tmp,$val,$new[$tmp[0]]);
-    }  
-    return $new;  
-}
-function _reconstruct_array($keys,$val,$new){
-    unset($keys[array_first_element($keys)]); 
-    if(!empty($keys)){ 
-        reset($keys);
-        $key = $keys[key($keys)];
-        $new[$key] = !isset($new[$key]) ? [] : $new[$key];
-        $new[$key] = _reconstruct_array($keys,$val,$new[$key]);
-    }else{
-        $new = $val;
-    }
-    return $new;
-}
+/**
+* Convert path to class PSR-4
+* 
+* @param mixed $paths
+*/
 function path_to_class(array $paths){
     $return = [];
     foreach($paths as $p){
@@ -247,8 +281,74 @@ function path_to_class(array $paths){
     }
     return $return;
 }
-function splitLast($string,$def='\\'){
-    $tmp = explode($def,$string);
+/**
+* Split last word in String with custome delimiters
+* 
+* @param mixed $string
+* @param mixed $def
+*/
+function string_split_last($string,$def='\\'){
+    $tmp = explode($def,trim($string,$def));
     $return = array_pop($tmp);   
     return $return; 
+}
+/**
+* Split first word in String with custome delimiters
+* 
+* @param mixed $string
+* @param mixed $def
+*/
+function string_split_first($string,$def='\\'){
+    $tmp = explode($def,trim($string,$def));
+    $return = array_shift($tmp);   
+    return $return; 
+}
+/**
+* Wrap text/string witch $break if current state more then $width 
+* 
+* @param mixed $str
+* @param mixed $width
+* @param mixed $break
+* @param mixed $cut
+*/
+function mb_wordwrap($str, $width = 75, $break = "\n", $cut = true) {
+    $lines = explode($break, $str);
+    foreach ($lines as &$line) {
+        $line = rtrim($line);
+        if (mb_strlen($line) <= $width)
+            continue;
+        $words = explode(' ', $line);
+        $line = '';
+        $actual = '';
+        foreach ($words as $word) {
+            if (mb_strlen($actual.$word) <= $width)
+                $actual .= $word.' ';
+            else {
+                if ($actual != '')
+                    $line .= rtrim($actual).$break;
+                $actual = $word;
+                if ($cut) {
+                    while (mb_strlen($actual) > $width) {
+                        $line .= mb_substr($actual, 0, $width).$break;
+                        $actual = mb_substr($actual, $width);
+                    }
+                }
+                $actual .= ' ';
+            }
+        }
+        $line .= trim($actual);
+    }
+    return implode($break, $lines);
+}
+/**
+* Generate very rare marker
+* 
+* @param mixed $num
+*/
+function heartgen($num=3){
+    $f = '';
+    for($i=1;$i<=$num;$i++){
+        $f .= '♥';
+    }
+    return $f;
 }

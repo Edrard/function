@@ -17,7 +17,9 @@
             "Error.php",
             "String.php",
             "Url.php",
-            "Shell.php"
+            "Shell.php",
+            "Json.php",
+            "Bit.php"
         ]
     }
 }

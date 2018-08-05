@@ -1,30 +1,60 @@
 <?php
-function array_resort_by_mergetwo($array,$param_1,$param_2){
+/**
+* Resort array using 2 internal parametrs with delimiter
+* 
+* @param mixed $array
+* @param mixed $param_1
+* @param mixed $param_2
+* @param mixed $del
+*/
+function array_resort_by_mergetwo($array,$param_1,$param_2,$del = ''){
     $new = [];
     if(is_array($array)){
         foreach($array as $val){
-            $new[$val[$param_1].$val[$param_2]] = $val;
+            $new[$val[$param_1].$del.$val[$param_2]] = $val;
         }    
     }
     return $new;
 }
-function recursive_array_search($needle,$haystack) {
+/**
+* Recursive search in array
+* 
+* @param mixed $needle
+* @param mixed $haystack
+*/
+function array_recursive_search($needle,$haystack) {
     foreach($haystack as $key => $value) {
         $current_key = $key;
-        if($needle === $value OR (is_array($value) && recursive_array_search($needle,$value) !== false)) {
+        if($needle === $value OR (is_array($value) && array_recursive_search($needle,$value) !== false)) {
             return $current_key;
         }
     }
     return false;
 }
+/**
+* Get key of first element
+* 
+* @param mixed $array
+*/
 function array_first_element($array){
     reset($array);
     return key($array);
 }
+/**
+* Get key of last element
+* 
+* @param mixed $array
+*/
 function array_last_element($array){
     end($array);
     return key($array);
 }
+/**
+* Resort Array by paramentr in array
+* 
+* @param mixed $array
+* @param mixed $param
+*/
 function array_resort($array,$param){
     $new = [];
     if(is_array($array)){
@@ -38,6 +68,12 @@ function array_resort($array,$param){
     }
     return $new;
 }
+/**
+* Resort array by paramenr in array and delete value
+* 
+* @param mixed $array
+* @param mixed $param
+*/
 function array_resort_empty($array,$param){
     $new = [];
     foreach($array as $val){
@@ -45,6 +81,13 @@ function array_resort_empty($array,$param){
     }
     return $new;
 }
+/**
+* Rename key in array
+* 
+* @param mixed $array
+* @param mixed $name
+* @param mixed $rename
+*/
 function array_rename(&$array,$name,$rename){
     foreach($array as $key => $val){
         if($key == $name){
@@ -55,6 +98,11 @@ function array_rename(&$array,$name,$rename){
     }
     return $array;
 }
+/**
+* Copy value to key
+* 
+* @param mixed $array
+*/
 function array_copy_value_to_key($array){
     $new = [];
     foreach($array as $key => $val){
@@ -62,32 +110,23 @@ function array_copy_value_to_key($array){
     }
     return $new;
 }
-function array_copy_key_to_value($array){
+/**
+* Copy key to value
+* 
+* @param mixed $array
+*/
+function array_copy_key_to_value(Array $array){
     foreach($array as $key => &$val){
         $val = $key;
     }
     return $array;
 }
-function resort_array_for_vertical_show(Array $array, $columns = '3'){
-    $count = count($array);
-    $new = [];
-    $n = 1;
-    foreach($array as $val){
-        $tmp = ($n - 1)*$columns;
-        if($tmp >= $count){
-            $f = 0;
-            while($tmp >= 0){
-                $tmp -= $count;
-                $f++;
-            }
-            $tmp = $tmp+$count + 1*($f - 1);
-        }
-        $new[$tmp] = $val;
-        $n++;
-    }
-    ksort($new);
-    return $new;
-}
+/**
+* Special merge, keep all keys even if its exists
+* 
+* @param mixed $array1
+* @param mixed $array2
+*/
 function array_special_merge($array1,$array2)
 {
     if(!is_array($array1)){
@@ -106,7 +145,13 @@ function array_special_merge($array1,$array2)
     return $array1;
 
 }
-function array_special_merge_time($array1,$array2)
+/**
+* Marge array, if same key, then create array and keep multiple value
+* 
+* @param mixed $array1
+* @param mixed $array2
+*/
+function array_special_merge_samein($array1,$array2)
 {
     if(!is_array($array1)){
         $array1 = array();
@@ -128,34 +173,134 @@ function array_special_merge_time($array1,$array2)
 
     return $array1;
 }
+/**
+* Check if Object empty
+* 
+* @param mixed $obj
+*/
 function empty_obj($obj) {
     foreach ($obj as $k) {
         return false;
     }
     return true;
 }
-function array_check_numeric($array){
+/**
+* Convert to numeric all values
+* 
+* @param mixed $array
+*/
+function array_conv_numeric($array){
     array_walk($array, function(&$value, $key) {
         $value = (int) $value;
     });
     return $array;
 }
-function array_max_min($keys,&$array,$min = 'min', $max = 'max'){
-    $keys = explode('.',$keys);
+
+/**
+* Recursive sum array
+* 
+* @param mixed $array
+* @return number
+*/
+function array_sum_recursive(array $array){
+    $sum = array(0);
+    foreach($array as $value) {
+        if(is_array($value)) {
+            $sum[] = arraySum($value);
+        } else {
+            $sum[] = $value;
+        }
+    }
+    return array_sum($sum);
+}
+/**
+* Insert in array after $skey with $wkey
+* 
+* @param mixed $array
+* @param mixed $insert
+* @param mixed $skey
+* @param mixed $wkey
+*/
+function array_insert_after_key($array,$insert,$skey,$wkey=''){
+    $k = 0;
+    if(is_array($array)){
+        foreach($array as $key => $val){
+            if($key == $skey){
+                $new[$key] = $val;
+                $new[$wkey] = $insert;
+                $k = 1; 
+            }else{
+                if(!isset($new[$key])){
+                    $new[$key] = $val;
+                }
+            }
+        }
+    }                                 
+    if($k == 0){
+        $new[$skey] = $insert;
+    }         
+    return $new;
+}
+/**
+* Clean array from empty value, keys can be reassign
+* 
+* @param mixed $array
+* @param mixed $use_keys
+*/
+function array_clean_empty_value($array,$use_keys = FALSE)
+{
+    if(isset($array)){
+        $new = array();
+        foreach ($array as $key => $value) {
+            if(!is_array($value)){
+                if ((!is_null($value) || $value !="") && strlen($value) > 0) {
+                    if(!$use_keys){
+                        $new[] = $value;
+                    }else{
+                        $new[$key] = $value;    
+                    }
+                }
+            }
+        } 
+        return $new;
+    }
+}
+
+function set(&$array, $key, $value)
+{
+    if (is_null($key)) {
+        return $array = $value;
+    }
+    $keys = explode('.', $key);
     while (count($keys) > 1) {
         $key = array_shift($keys);
-
         // If the key doesn't exist at this depth, we will just create an empty array
         // to hold the next value, allowing us to create the arrays to hold final
         // values at the correct depth. Then we'll keep digging into the array.
         if (! isset($array[$key]) || ! is_array($array[$key])) {
-            return FALSE;
+            $array[$key] = [];
         }
-
         $array = &$array[$key];
     }
-    $last = array_shift($keys);
-    if($array[$last][$min] > $array[$last][$max]){
-        $array[$last][$min] = $array[$last][$max];    
+    $array[array_shift($keys)] = $value;
+    return $array;
+}
+/**
+* Flatten a multi-dimensional associative array with dots.
+*
+* @param  array   $array
+* @param  string  $prepend
+* @return array
+*/
+function dot($array, $prepend = '')
+{
+    $results = [];
+    foreach ($array as $key => $value) {
+        if (is_array($value) && ! empty($value)) {
+            $results = array_merge($results, dot($value, $prepend.$key.'.'));
+        } else {
+            $results[$prepend.$key] = $value;
+        }
     }
+    return $results;
 }

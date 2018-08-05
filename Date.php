@@ -1,8 +1,8 @@
 <?php
-  
-function dmy_hi_to_unix($date,$ddeli = '/', $tdeli = ':'){    
-   return date_timestamp_get(date_create_from_format('d'.$ddeli.'m'.$ddeli.'Y H'.$tdeli.'i', $date));
+
+function today(){
+    return strtotime(date("Y-m-d"));
 }
-function dmy_hi_to_unix_short($date,$ddeli = '/', $tdeli = ':'){    
-   return date_timestamp_get(date_create_from_format('d'.$ddeli.'m'.$ddeli.'Y H'.$tdeli.'i', $date.' 00:00'));
+function now(){
+    return strtotime(date("Y-m-d H:i:s"));
 }

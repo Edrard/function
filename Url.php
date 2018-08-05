@@ -1,6 +1,6 @@
 <?php
 
-function unparse_url(array $parsed) {
+function url_unparse(array $parsed) {
     $get = function ($key) use ($parsed) {
         return isset($parsed[$key]) ? $parsed[$key] : null;
     };
@@ -30,6 +30,22 @@ function unparse_url(array $parsed) {
     return $return;
 }
 
-function unparse_proxy(array $proxy){
+function url_unparse_proxy(array $proxy){
     return $proxy['proxy'].':'.$proxy['port'];    
+}
+/**
+* Fixing URL
+* 
+* @param mixed $url - check url
+* @param mixed $add - url if base havent
+*/
+function fix_url($url,$add){  
+    if (strtolower(substr($url, 0, 2)) != "//"){  
+        if(strtolower(substr($url, 0, 4)) != "http" && strtolower(substr($url, 0, 5)) != "https") {
+            $url = $add.$url;
+        }
+    }elseif(strtolower(substr($url, 0, 2)) == "//"){
+        $url = "http:".$url;
+    }
+    return $url;
 }
