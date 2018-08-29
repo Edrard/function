@@ -19,7 +19,8 @@
             "Url.php",
             "Shell.php",
             "Json.php",
-            "Bit.php"
+            "Bit.php",
+            "Obj.php"
         ]
     }
 }
