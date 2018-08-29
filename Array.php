@@ -148,10 +148,10 @@ function array_special_merge($array1,$array2)
 /**
 * Marge array, if same key, then create array and keep multiple value
 * 
-* @param mixed $array1
-* @param mixed $array2
+* @param array $array1
+* @param array $array2
 */
-function array_special_merge_samein($array1,$array2)
+function array_special_merge_samein(array $array1,array $array2)
 {
     if(!is_array($array1)){
         $array1 = array();
@@ -167,6 +167,30 @@ function array_special_merge_samein($array1,$array2)
                     $array1[$key2][] = $tmp;
                 }
                 $array1[$key2][] = $val2; 
+            }
+        }
+    }
+
+    return $array1;
+}
+/**
+* Merge array, if same key, then add prefix to key
+* 
+* @param array $array1
+* @param array $array2
+* @param string $prefix
+*/
+function array_special_merge_samere(array $array1,array $array2,$prefix = 'second_')
+{
+    if(!is_array($array1)){
+        $array1 = array();
+    }
+    if(is_array($array2)){
+        foreach($array2 as $key2 => $val2){
+            if(!array_key_exists($key2,$array1)){
+                $array1[$key2] = $val2;
+            }else{          
+                $array1[$prefix.$key2] = $val2; 
             }
         }
     }
