@@ -189,14 +189,8 @@ function array_special_merge_samere(array $array1,array $array2,$prefix = 'secon
         foreach($array2 as $key2 => $val2){
             if(!array_key_exists($key2,$array1)){
                 $array1[$key2] = $val2;
-            }else{ 
-                $kk_in = $base = $prefix.$key2;
-                $i = 0;
-                while(array_key_exists($kk_in,$array1)){
-                    $kk_in = $i.$base; 
-                    $i++; 
-                }         
-                $array1[$kk_in] = $val2; 
+            }else{          
+                $array1[$prefix.$key2] = $val2; 
             }
         }
     }
