@@ -55,3 +55,12 @@ function json_indent($json) {
 
     return $result;
 }
+/**
+* Check if string is json
+* 
+* @param string $string
+*/
+function is_json($string) {
+ json_decode($string);
+ return (json_last_error() == JSON_ERROR_NONE);
+}
