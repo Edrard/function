@@ -61,6 +61,6 @@ function json_indent($json) {
 * @param string $string
 */
 function is_json($string) {
- json_decode($string);
- return (json_last_error() == JSON_ERROR_NONE);
+    json_decode($string);
+    return (json_last_error() == JSON_ERROR_NONE);
 }
