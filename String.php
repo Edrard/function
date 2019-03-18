@@ -43,6 +43,11 @@ if (! function_exists('string_only_latin')) {
 * @param mixed $tran
 * @param mixed $base
 */
+if (! function_exists('encodestring')) {   
+    function encodestring($st,$tran = 'en',$base = 'ru'){ 
+        return string_encodestring($st,$tran,$base);
+    }
+}
 if (! function_exists('string_encodestring')) {   
     function string_encodestring($st,$tran = 'en',$base = 'ru'){ 
         $arr['ru'] = array( 
