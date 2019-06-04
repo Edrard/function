@@ -79,6 +79,24 @@ if (! function_exists('array_resort')) {
     }
 }
 /**
+*  Resort Array and create multilevel 
+*/
+if (! function_exists('array_resort_multi')) {   
+    function array_resort_multi($array,$param){
+        $new = [];
+        if(is_array($array)){
+            foreach($array as $val){
+                if(is_object($val)){
+                    $new[$val->{$param}][] = $val;    
+                }elseif(is_array($val)){
+                    $new[$val[$param]][] = $val;
+                }
+            }
+        }
+        return $new;
+    }
+}
+/**
 * Resort array by paramenr in array and delete value
 * 
 * @param mixed $array
