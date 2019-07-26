@@ -22,5 +22,6 @@
             "Bit.php",
             "Obj.php"
         ]
-    }
+    },
+    "minimum-stability": "dev" 
 }
