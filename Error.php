@@ -1,27 +1,29 @@
-<?php 
-if (! function_exists('dd')) {    
+<?php
+if (! function_exists('dd')) {
     /**
     * Normal print variables
-    * 
+    *
     */
-    function dd(){
+    function dd()
+    {
         $arg_list = func_get_args();
-        foreach($arg_list as $var){
-            print_r($var); 
-        }              
+        foreach ($arg_list as $var) {
+            print_r($var);
+        }
         die;
     }
 }
-if (! function_exists('vd')) {   
+if (! function_exists('vd')) {
     /**
     * Var dump variables
-    * 
+    *
     */
-    function vd(){
+    function vd()
+    {
         $arg_list = func_get_args();
-        foreach($arg_list as $var){
-            var_dump($var); 
-        }              
+        foreach ($arg_list as $var) {
+            var_dump($var);
+        }
         die;
     }
 }

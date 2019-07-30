@@ -2,12 +2,12 @@
 
 /**
 * Indent Json befor save
-*   
+*
 * @param mixed $json
 */
-if (! function_exists('json_indent')) {  
-    function json_indent($json) {
-
+if (! function_exists('json_indent')) {
+    function json_indent($json)
+    {
         $result      = '';
         $pos         = 0;
         $strLen      = strlen($json);
@@ -25,9 +25,9 @@ if (! function_exists('json_indent')) {
             if ($char == '"' && $prevChar != '\\') {
                 $outOfQuotes = !$outOfQuotes;
 
-                // If this character is the end of an element, 
+            // If this character is the end of an element,
                 // output a new line and indent the next line.
-            } else if(($char == '}' || $char == ']') && $outOfQuotes) {
+            } elseif (($char == '}' || $char == ']') && $outOfQuotes) {
                 $result .= $newLine;
                 $pos --;
                 for ($j=0; $j<$pos; $j++) {
@@ -38,7 +38,7 @@ if (! function_exists('json_indent')) {
             // Add the character to the result string.
             $result .= $char;
 
-            // If the last character was the beginning of an element, 
+            // If the last character was the beginning of an element,
             // output a new line and indent the next line.
             if (($char == ',' || $char == '{' || $char == '[') && $outOfQuotes) {
                 $result .= $newLine;
@@ -59,11 +59,12 @@ if (! function_exists('json_indent')) {
 }
 /**
 * Check if string is json
-* 
+*
 * @param string $string
 */
-if (! function_exists('is_json')) {  
-    function is_json($string) {
+if (! function_exists('is_json')) {
+    function is_json($string)
+    {
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
     }
