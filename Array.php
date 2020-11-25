@@ -38,6 +38,25 @@ if (! function_exists('array_recursive_search')) {
     }
 }
 /**
+* Recursive search in array
+*
+* @param mixed $needle
+* @param mixed $haystack
+*/
+if (! function_exists('array_unite_or_split_by_key')) {
+    function array_unite_or_split_by_key($array){
+        $new = array();
+        array_walk($array, function($item, $key) use(&$new) {
+            if(is_array($item)){
+                foreach($item as $ikey => $val){
+                    $new[$ikey][$key] = $val;
+                }
+            }
+        });
+        return $new;
+    }
+}
+/**
 * Get key of first element
 *
 * @param mixed $array
@@ -296,14 +315,14 @@ if (! function_exists('array_sum_recursive')) {
         return array_sum($sum);
     }
 }
-    /**
-    * Insert in array after $skey with $wkey
-    *
-    * @param mixed $array
-    * @param mixed $insert
-    * @param mixed $skey
-    * @param mixed $wkey
-    */
+/**
+* Insert in array after $skey with $wkey
+*
+* @param mixed $array
+* @param mixed $insert
+* @param mixed $skey
+* @param mixed $wkey
+*/
 if (! function_exists('array_insert_after_key')) {
     function array_insert_after_key($array, $insert, $skey, $wkey='')
     {
