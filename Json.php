@@ -25,7 +25,7 @@ if (! function_exists('json_indent')) {
             if ($char == '"' && $prevChar != '\\') {
                 $outOfQuotes = !$outOfQuotes;
 
-            // If this character is the end of an element,
+                // If this character is the end of an element,
                 // output a new line and indent the next line.
             } elseif (($char == '}' || $char == ']') && $outOfQuotes) {
                 $result .= $newLine;
@@ -67,5 +67,24 @@ if (! function_exists('is_json')) {
     {
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
+    }
+}
+/**
+* Json Form converter, using if form data sende in json, becouse of post limitation
+*
+* @param string $string
+* @param string $string
+* @param string $string
+* @param string $string
+* @param string $string
+*/
+if (! function_exists('json_form_converter')) {
+    function json_form_converter( array $data, Closure $func, $name = 'name', $value = 'value'){
+        $ready = array();
+        foreach($data as $val){
+            list( ,$mark,$key) = $func($val[$name]);
+            $ready[$key][$mark] = $val[$value];
+        }
+        return $ready;
     }
 }
