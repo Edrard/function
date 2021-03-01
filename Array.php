@@ -121,6 +121,22 @@ if (! function_exists('array_resort_multi')) {
         return $new;
     }
 }
+if (! function_exists('array_resort_by_two')) {
+    function array_resort_by_two($array,$param,$param2 = ''){
+        if(!$param2){
+            foreach($array as $val){
+                $new[$val[$param]][] = $val;
+            }
+        }else{
+            foreach($array as $val){
+                $new[$val[$param]][$val[$param2]] = $val;
+            }
+        }
+        return $new;
+
+    }
+}
+
 /**
 * Resort array by paramenr in array and delete value
 *
