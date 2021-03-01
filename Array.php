@@ -121,6 +121,13 @@ if (! function_exists('array_resort_multi')) {
         return $new;
     }
 }
+/**
+* Resort Array by two paramentrs in array
+*
+* @param mixed $array
+* @param mixed $param
+* @param mixed $param2
+*/
 if (! function_exists('array_resort_by_two')) {
     function array_resort_by_two($array,$param,$param2 = ''){
         if(!$param2){
