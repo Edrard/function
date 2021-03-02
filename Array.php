@@ -40,8 +40,8 @@ if (! function_exists('array_recursive_search')) {
 /**
 * Recursive search in array
 *
-* @param mixed $needle
-* @param mixed $haystack
+* @param mixed $array
+*
 */
 if (! function_exists('array_unite_or_split_by_key')) {
     function array_unite_or_split_by_key($array){
