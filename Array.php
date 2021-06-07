@@ -130,6 +130,7 @@ if (! function_exists('array_resort_multi')) {
 */
 if (! function_exists('array_resort_by_two')) {
     function array_resort_by_two($array,$param,$param2 = ''){
+        $new = array();
         if(!$param2){
             foreach($array as $val){
                 $new[$val[$param]][] = $val;
