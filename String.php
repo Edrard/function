@@ -51,6 +51,16 @@ if (! function_exists('encodestring')) {
         return string_encodestring($st, $tran, $base);
     }
 }
+/**
+* Translitatate any Cyrilic to Latin
+*
+* @param string $st
+*/
+if (! function_exists('translit_string')) {
+    function translit_string($st) {
+        return transliterator_transliterate('Any-Latin; Latin-ASCII', $st);
+    }
+}
 if (! function_exists('string_encodestring')) {
     function string_encodestring($st, $tran = 'en', $base = 'ru')
     {
