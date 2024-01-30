@@ -412,3 +412,28 @@ if (! function_exists('heartgen')) {
         return $f;
     }
 }
+if (! function_exists('camel_case')) {
+    /**
+    * Convert a value to camel case.
+    *
+    * @param  string  $input
+    * @param  string  $separator
+    * @return string
+    */
+    function camel_case($input, $separator = '_')
+    {
+        return lcfirst(str_replace($separator, '', ucwords($input, $separator)));
+    }
+}
+if (! function_exists('snake_case')) {
+    /**
+    * Convert a value to snake case.
+    *
+    * @param  string  $input
+    * @return string
+    */
+    function snake_case($input)
+    {
+        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $input));
+    }
+}
