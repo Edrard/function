@@ -13,6 +13,7 @@
     "autoload": {
         "files": [
             "Array.php",
+            "Cli.php",
             "Date.php",
             "Error.php",
             "String.php",
