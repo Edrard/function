@@ -137,12 +137,7 @@ if (! function_exists('json_validate')) {
                 break;
         }
 
-        if ($error !== '') {
-            // throw the Exception or exit // or whatever :)
-            exit($error);
-        }
-
         // everything is OK
-        return $result;
+        return $error !== '' ? $result : $error;
     }
 }
