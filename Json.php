@@ -95,10 +95,10 @@ if (! function_exists('json_form_converter')) {
 * @param string $string
 */
 if (! function_exists('json_validate')) {
-    function json_validate($string)
+    function json_validate($string,$array = False)
     {
         // decode the JSON data
-        $result = json_decode($string);
+        $result = json_decode($string,$array);
 
         // switch and check possible JSON errors
         switch (json_last_error()) {
