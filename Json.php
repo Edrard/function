@@ -138,6 +138,6 @@ if (! function_exists('json_validate')) {
         }
 
         // everything is OK
-        return $error !== '' ? $result : $error;
+        return $error === '' ? $result : $error;
     }
 }
