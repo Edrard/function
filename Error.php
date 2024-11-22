@@ -29,13 +29,13 @@ if (! function_exists('vd')) {
 }
 if (! function_exists('is_function_available')) {
     function is_function_available($func) {
-        if (ini_get('safe_mode') || !function_exists($func)) return false;
+        if (ini_get('safe_mode') || !function_exists($func)) return FALSE;
         $disabled = ini_get('disable_functions');
         if ($disabled) {
             $disabled = explode(',', $disabled);
             $disabled = array_map('trim', $disabled);
             return !in_array($func, $disabled);
         }
-        return true;
+        return TRUE;
     }
 }
