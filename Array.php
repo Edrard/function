@@ -403,7 +403,7 @@ if (! function_exists('flatten_array')) {
         foreach ($array as $key => $value) {
             $newKey = $prefix === '' ? $key : $prefix . $separator . $key;
             if (is_array($value)) {
-                $result = array_merge($result, flattenArrayUniversal($value, $separator, $newKey));
+                $result = array_merge($result, flatten_array($value, $separator, $newKey));
             } else {
                 $result[$newKey] = $value;
             }
