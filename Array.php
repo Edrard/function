@@ -396,3 +396,40 @@ if (! function_exists('array_clean_empty_value')) {
         }
     }
 }
+if (! function_exists('flatten_array')) {
+    function flatten_array(array $array, string $separator = '_', string $prefix = ''): array {
+        $result = [];
+
+        foreach ($array as $key => $value) {
+            $newKey = $prefix === '' ? $key : $prefix . $separator . $key;
+            if (is_array($value)) {
+                $result = array_merge($result, flattenArrayUniversal($value, $separator, $newKey));
+            } else {
+                $result[$newKey] = $value;
+            }
+        }
+
+        return $result;
+    }
+}
+if (! function_exists('unflatten_array')) {
+    function unflatten_array(array $flatArray, string $separator = '_'): array {
+        $result = [];
+
+        foreach ($flatArray as $key => $value) {
+            $keys = explode($separator, $key);
+            $temp = &$result;
+
+            foreach ($keys as $innerKey) {
+                if (!isset($temp[$innerKey]) || !is_array($temp[$innerKey])) {
+                    $temp[$innerKey] = [];
+                }
+                $temp = &$temp[$innerKey];
+            }
+
+            $temp = $value;
+        }
+
+        return $result;
+    }
+}
